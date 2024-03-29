@@ -5,6 +5,7 @@
     "outDir": "dist/",                                
     "forceConsistentCasingInFileNames": true,
     "strict": true,
+    "allowSyntheticDefaultImports": true,
     "skipLibCheck": true
   },
   "include": ["src/**/*.ts"],
