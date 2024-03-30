@@ -13,11 +13,11 @@ CREATE TABLE fruit (
 CREATE TABLE fruit_nutrition (
   id SERIAL PRIMARY KEY,
   fruit_id INT NOT NULL,
-  calories INT NOT NULL,
-  fat INT NOT NULL,
-  sugar INT NOT NULL,
-  carbohydrates INT NOT NULL,
-  protein INT NOT NULL,
+  calories NUMERIC NOT NULL,
+  fat NUMERIC NOT NULL,
+  sugar NUMERIC NOT NULL,
+  carbohydrates NUMERIC NOT NULL,
+  protein NUMERIC NOT NULL,
   FOREIGN KEY (fruit_id) REFERENCES fruit(id)
 );
 
