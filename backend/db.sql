@@ -29,3 +29,7 @@ CREATE TABLE smoothie_ingredients (
   FOREIGN KEY (smoothie_id) REFERENCES smoothie(id),
   FOREIGN KEY (fruit_id) REFERENCES fruit(id)
 );
+
+CREATE INDEX idx_fruit_name ON fruit (name);
+
+CREATE INDEX idx_fruit_nutrition_fruit_id ON fruit_nutrition (fruit_id);
