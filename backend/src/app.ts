@@ -1,6 +1,6 @@
 import express from 'express';
-import { router as smoothieRouter } from './routes/smoothieRoutes'
-import { router as fruitRouter } from './routes/fruitRoutes'
+import { router as smoothieRouter } from './routes/smoothieRoutes.js'
+import { router as fruitRouter } from './routes/fruitRoutes.js'
 
 const app = express()
 const PORT = process.env.PORT || 3000
