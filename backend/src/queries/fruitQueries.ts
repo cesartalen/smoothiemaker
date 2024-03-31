@@ -1,27 +1,27 @@
-export const getFruit = (fruit: string) => {
+export const getFruitQuery = (fruit: string) => {
   return {
     text: 'SELECT * FROM fruit WHERE name = $1',
     values: [fruit],
   }
 }
 
-export const getFruitNutrition = (fruitId: number) => {
+export const getFruitNutritionQuery = (fruitId: number) => {
   return {
     text: 'SELECT * FROM fruit_nutrition WHERE fruit_id = $1',
     values: [fruitId],
   }
 }
 
-export const getFruits = () => {
+export const getFruitsQuery = () => {
   return 'SELECT * FROM fruit'
 }
 
 
-export const getFruitsAndNutrition = () => {
+export const getFruitsAndNutritionQuery = () => {
   return 'SELECT * FROM fruit JOIN fruit_nutrition ON fruit.id = fruit_nutrition.fruit_id'
 }
 
-export const getFruitAndNutrition = (fruit: string) => {
+export const getFruitAndNutritionQuery = (fruit: string) => {
   return {
     text: 'SELECT * FROM fruit JOIN fruit_nutrition ON fruit.id = fruit_nutrition.fruit_id WHERE name = $1',
     values: [fruit],
