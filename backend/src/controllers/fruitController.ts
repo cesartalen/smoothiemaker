@@ -1,14 +1,26 @@
-import { Request, Response } from 'express'
+import { NextFunction, Request, Response } from 'express'
 import { pool } from '../config/dbConfig.js'
 import * as fruitQueries from '../queries/fruitQueries.js'
+import { ResponseStatus } from '../utils/responseStatus.js'
 
-export const getFruit = async (req: Request, res: Response) => {
+export const getFruit = async (req: Request, res: Response, next: NextFunction) => {
   const { fruit } = req.params
   if(!fruit) { 
-    return res.json({ message: 'No fruit provided' })
+    return next({
+      message: 'No fruit provided',
+      status: ResponseStatus.BAD_REQUEST
+    })
   }
 
   const result = await pool.query(fruitQueries.getFruitQuery(fruit))
+
+  if(result.rows.length === 0) {
+    return next({
+      message: 'Fruit not found',
+      status: ResponseStatus.NOT_FOUND
+    })
+  }
+  
   res.json(result.rows)
 }
 
