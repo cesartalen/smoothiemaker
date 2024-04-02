@@ -3,6 +3,9 @@ import { pool } from '../config/dbConfig.js'
 import * as fruitQueries from '../queries/fruitQueries.js'
 import { ResponseStatus } from '../utils/responseStatus.js'
 
+// Controller functions for fruit routes
+
+// Get a single fruit by its (name)
 export const getFruit = async (req: Request, res: Response, next: NextFunction) => {
   const { fruit } = req.params
   if(!fruit) { 
@@ -13,7 +16,6 @@ export const getFruit = async (req: Request, res: Response, next: NextFunction) 
   }
 
   const result = await pool.query(fruitQueries.getFruitQuery(fruit))
-
   if(result.rows.length === 0) {
     return next({
       message: 'Fruit not found',
@@ -24,11 +26,13 @@ export const getFruit = async (req: Request, res: Response, next: NextFunction) 
   res.json(result.rows)
 }
 
+// Get all fruits ()
 export const getFruits = async (req: Request, res: Response) => {
   const result = await pool.query(fruitQueries.getFruitsQuery())
   res.json(result.rows)
 }
 
+// Get the nutritional data for a single fruit by its (fruitId)
 export const getFruitNutrition = async (req: Request, res: Response) => {
   const { fruitId } = req.params
   if(!fruitId) { 
@@ -43,6 +47,7 @@ export const getFruitNutrition = async (req: Request, res: Response) => {
   res.json(result.rows)
 }
 
+// Get the nutritional data for a single fruit by its (name)
 export const getFruitAndNutrition = async (req: Request, res: Response) => {
   const { fruit } = req.params
   if(!fruit) { 
@@ -53,6 +58,7 @@ export const getFruitAndNutrition = async (req: Request, res: Response) => {
   res.json(result.rows)
 }
 
+// Get the nutritional data for all fruits ()
 export const getFruitsAndNutrition = async (req: Request, res: Response) => {
   const result = await pool.query(fruitQueries.getFruitsAndNutritionQuery())
   res.json(result.rows)

@@ -1,3 +1,5 @@
+// Enum for HTTP Response Status Codes
+
 export enum ResponseStatus {
   OK = 200,
   CREATED = 201,

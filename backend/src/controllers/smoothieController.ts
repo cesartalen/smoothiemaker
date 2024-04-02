@@ -4,6 +4,7 @@ import * as smoothieQueries from '../queries/smoothieQueries.js'
 import { NutrientType } from '../types/fruit.js'
 import { SmoothieType, FruitsType } from '../types/smoothie.js'
 
+// Get the nutritional data for a mix of fruits (name) and their individual (amount)
 export const getSmoothie = async (req: Request, res: Response) => {
   if(req.body.fruits === undefined || req.body.fruits.length === 0) {
     return res.json({ message: 'No ingredients provided!' })
