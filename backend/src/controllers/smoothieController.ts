@@ -1,8 +1,8 @@
-import { Request, Response } from 'express'
+import { NextFunction, Request, Response } from 'express'
 import { pool } from '../config/dbConfig.js'
 import * as smoothieQueries from '../queries/smoothieQueries.js'
 import { NutrientType } from '../types/fruit.js'
-import { SmoothieType, FruitsType } from '../types/smoothie.js'
+import { FruitsType } from '../types/smoothie.js'
 
 // Get the nutritional data for a mix of fruits (name) and their individual (amount)
 export const getSmoothie = async (req: Request, res: Response) => {
@@ -10,7 +10,7 @@ export const getSmoothie = async (req: Request, res: Response) => {
     return res.json({ message: 'No ingredients provided!' })
   }
   
-  const fruits: SmoothieType = req.body
+  const fruits: FruitsType[] = req.body
   
   let nutritionContent : NutrientType = {
     calories: 0,
@@ -20,7 +20,7 @@ export const getSmoothie = async (req: Request, res: Response) => {
     carbohydrates: 0
   }
   
-  for (const fruit of fruits.fruits) {
+  for (const fruit of fruits) {
     const query = smoothieQueries.getOnlyFruitNutritionQuery(fruit.name)
     const result = await pool.query(query)
     
@@ -36,4 +36,18 @@ export const getSmoothie = async (req: Request, res: Response) => {
   }
   
   res.json(nutritionContent)
+}
+
+// Create a new smoothie with a name
+export const createSmoothie = async (req: Request, res: Response, next: NextFunction) => {
+  const { name, fruits }: { name: string, fruits: FruitsType[] } = req.body
+
+  const result = await pool.query(smoothieQueries.createSmoothie(name))
+
+  for(const fruit of fruits) {
+    const query = smoothieQueries.addFruitToSmoothie(result.rows[0].id, fruit.name, fruit.amount)
+    await pool.query(query)
+  }
+
+  res.json({ message: `Smoothie ${name} created!` })
 }
