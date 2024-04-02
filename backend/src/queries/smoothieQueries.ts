@@ -4,3 +4,19 @@ export const getOnlyFruitNutritionQuery = (fruit: string) => {
     values: [fruit],
   }
 }
+
+// Creates new smoothie using (name) and returns its id
+export const createSmoothie = (name: string) => {
+  return {
+    text: 'INSERT INTO smoothie (name) VALUES ($1) RETURNING id',
+    values: [name],
+  }
+}
+
+// Adds an (amount) of any fruit (name) to a smoothie (smoothieId)
+export const addFruitToSmoothie = (smoothieId: any, name: string, amount: number) => {
+  return {
+    text: 'INSERT INTO smoothie_ingredients (smoothie_id, fruit_id, amount) VALUES ($1, (SELECT id FROM fruit WHERE name = $2), $3)',
+    values: [smoothieId, name, amount],
+  }
+}
