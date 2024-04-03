@@ -3,11 +3,15 @@ import { pool } from '../config/dbConfig.js'
 import * as smoothieQueries from '../queries/smoothieQueries.js'
 import { NutrientType } from '../types/fruit.js'
 import { FruitsType } from '../types/smoothie.js'
+import { ResponseStatus } from '../utils/responseStatus.js'
 
 // Get the nutritional data for a mix of fruits (name) and their individual (amount)
-export const getSmoothie = async (req: Request, res: Response) => {
+export const getSmoothie = async (req: Request, res: Response, next: NextFunction) => {
   if(req.body.fruits === undefined || req.body.fruits.length === 0) {
-    return res.json({ message: 'No ingredients provided!' })
+    return next({ 
+      message: 'No fruits provided!',
+      status: ResponseStatus.BAD_REQUEST
+     })
   }
   
   const fruits: FruitsType[] = req.body
@@ -25,7 +29,10 @@ export const getSmoothie = async (req: Request, res: Response) => {
     const result = await pool.query(query)
     
     if(result.rowCount === 0) {
-      return res.json({ message: `No fruit called ${fruit.name} exists in this database` })
+      return next({
+        message: `No fruit called ${fruit.name} exists in this database!`,
+        status: ResponseStatus.NOT_FOUND
+      })
     }
     
     let nutrition = result.rows[0]
@@ -40,6 +47,13 @@ export const getSmoothie = async (req: Request, res: Response) => {
 
 // Create a new smoothie with a name
 export const createSmoothie = async (req: Request, res: Response, next: NextFunction) => {
+  if(req.body.fruits === undefined || req.body.fruits.length === 0) {
+    return next({
+      message:'No fruits provided!',
+      status: ResponseStatus.BAD_REQUEST
+    })
+  }
+
   const { name, fruits }: { name: string, fruits: FruitsType[] } = req.body
 
   const result = await pool.query(smoothieQueries.createSmoothie(name))
