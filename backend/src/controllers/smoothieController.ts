@@ -4,9 +4,10 @@ import * as smoothieQueries from '../queries/smoothieQueries.js'
 import { NutrientType } from '../types/fruit.js'
 import { FruitsType } from '../types/smoothie.js'
 import { ResponseStatus } from '../utils/responseStatus.js'
+import { catchAsync } from '../utils/catchAsync.js'
 
 // Get the nutritional data for a mix of fruits (name) and their individual (amount)
-export const getSmoothie = async (req: Request, res: Response, next: NextFunction) => {
+export const getSmoothie = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
   if(req.body.fruits === undefined || req.body.fruits.length === 0) {
     return next({ 
       message: 'No fruits provided!',
@@ -43,10 +44,10 @@ export const getSmoothie = async (req: Request, res: Response, next: NextFunctio
   }
   
   res.json(nutritionContent)
-}
+})
 
 // Create a new smoothie with a name
-export const createSmoothie = async (req: Request, res: Response, next: NextFunction) => {
+export const createSmoothie = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
   if(req.body.fruits === undefined || req.body.fruits.length === 0) {
     return next({
       message:'No fruits provided!',
@@ -64,4 +65,4 @@ export const createSmoothie = async (req: Request, res: Response, next: NextFunc
   }
 
   res.json({ message: `Smoothie ${name} created!` })
-}
+})
