@@ -67,7 +67,31 @@ export const createSmoothie = catchAsync(async (req: Request, res: Response, nex
   res.json({ message: `Smoothie ${name} created!` })
 })
 
+// Get all smoothies
 export const getSmoothies = catchAsync(async (req: Request, res: Response) => {
   const result = await pool.query(smoothieQueries.getSmoothiesQuery())
+  res.json(result.rows)
+})
+
+// Get a smoothie by its (smoothieId)
+export const getSmoothieById = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+  const { smoothieId } = req.params
+
+  if(!smoothieId) {
+    return next({
+      message:'Provide a smoothieId!',
+      status: ResponseStatus.BAD_REQUEST
+    })
+  }
+
+  if(!parseInt(smoothieId)) {
+    return next({
+      message:'smoothieId must be a number!',
+      status: ResponseStatus.BAD_REQUEST
+    })
+  }
+
+  const query = smoothieQueries.getSmoothieQuery(parseInt(smoothieId))
+  const result = await pool.query(query)
   res.json(result.rows)
 })
