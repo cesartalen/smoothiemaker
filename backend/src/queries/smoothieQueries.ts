@@ -21,6 +21,15 @@ export const addFruitToSmoothieQuery = (smoothieId: any, name: string, amount: n
   }
 }
 
+// Get all smoothies
 export const getSmoothiesQuery = () => {
   return 'SELECT * FROM smoothie'
+}
+
+// Get smoothie contents by (smoothieId)
+export const getSmoothieQuery = (id: number) => {
+  return {
+    text: 'SELECT fruit.name, smoothie_ingredients.amount FROM smoothie JOIN smoothie_ingredients ON smoothie.id = smoothie_ingredients.smoothie_id JOIN fruit ON smoothie_ingredients.fruit_id = fruit.id WHERE smoothie.id = $1',
+    values: [id],
+  }
 }
