@@ -66,3 +66,8 @@ export const createSmoothie = catchAsync(async (req: Request, res: Response, nex
 
   res.json({ message: `Smoothie ${name} created!` })
 })
+
+export const getSmoothies = catchAsync(async (req: Request, res: Response) => {
+  const result = await pool.query(smoothieQueries.getSmoothiesQuery())
+  res.json(result.rows)
+})
