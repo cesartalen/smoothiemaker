@@ -57,10 +57,10 @@ export const createSmoothie = catchAsync(async (req: Request, res: Response, nex
 
   const { name, fruits }: { name: string, fruits: FruitsType[] } = req.body
 
-  const result = await pool.query(smoothieQueries.createSmoothie(name))
+  const result = await pool.query(smoothieQueries.createSmoothieQuery(name))
 
   for(const fruit of fruits) {
-    const query = smoothieQueries.addFruitToSmoothie(result.rows[0].id, fruit.name, fruit.amount)
+    const query = smoothieQueries.addFruitToSmoothieQuery(result.rows[0].id, fruit.name, fruit.amount)
     await pool.query(query)
   }
 
