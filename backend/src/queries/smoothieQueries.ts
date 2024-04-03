@@ -20,3 +20,7 @@ export const addFruitToSmoothie = (smoothieId: any, name: string, amount: number
     values: [smoothieId, name, amount],
   }
 }
+
+export const getSmoothiesQuery = () => {
+  return 'SELECT * FROM smoothie'
+}
