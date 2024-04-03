@@ -1,4 +1,4 @@
-import { NextFunction } from 'express'
+import { NextFunction, Request, Response } from 'express'
 
 // Catch-async errors and then pass them to the error handling middleware
 export const catchAsync = (fn: Function) => {
