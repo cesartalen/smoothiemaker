@@ -1,6 +1,7 @@
+// Get fruit by (name), 
 export const getFruitQuery = (fruit: string) => {
   return {
-    text: 'SELECT * FROM fruit WHERE name = $1',
+    text: 'SELECT * FROM fruit WHERE LOWER(name) = LOWER($1)',
     values: [fruit],
   }
 }
@@ -18,7 +19,7 @@ export const getFruitNutritionQuery = (fruitId: number) => {
 
 export const getFruitAndNutritionQuery = (fruit: string) => {
   return {
-    text: 'SELECT * FROM fruit JOIN fruit_nutrition ON fruit.id = fruit_nutrition.fruit_id WHERE name = $1',
+    text: 'SELECT * FROM fruit JOIN fruit_nutrition ON fruit.id = fruit_nutrition.fruit_id WHERE LOWER(name) = LOWER($1)',
     values: [fruit],
   }
 }
