@@ -10,6 +10,7 @@ const PORT = process.env.PORT || 3000
 
 app.use(express.json())
 
+/*
 app.use(
   cors({
     origin: ['http://localhost:5173', 'http://www.localhost:5173'],
@@ -17,6 +18,10 @@ app.use(
     allowedHeaders: ['Content-Type'],
   })
 )
+*/
+
+app.use(cors())
+
 
 // Global rate limiter, limits the number of requests to 50 every 15 minutes for all routes
 export const sharedLimiter = rateLimit({
