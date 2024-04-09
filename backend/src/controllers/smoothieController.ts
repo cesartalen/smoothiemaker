@@ -15,8 +15,8 @@ export const getSmoothie = catchAsync(async (req: Request, res: Response, next: 
      })
   }
   
-  const fruits: FruitsType[] = req.body
-  
+  const fruits: FruitsType[] = req.body.fruits
+
   let nutritionContent : NutrientType = {
     calories: 0,
     fat: 0,
