@@ -1,15 +1,35 @@
-import { ChangeEvent, useEffect, useState } from 'react'
+import { ChangeEvent, useState } from 'react'
 import { postSmoothieMix } from '../services/apiSmoothies'
 
 export const HomePage = () => {
   const [inputData, setInputData] = useState<string>()
+  // Todo NutritionDataType
+  const [nutritionData, setNutritionData] = useState<any>()
 
   const handleSubmit = async () => {
     if(inputData != undefined) {
-      // TODO default amount should be 1, but if there is a number at the end before comma it should be used as the amount.
+      /* Separates the data by commas into arrays.
+         
+         Removes spaces from beginning and end of all data
+         
+         Splits into two parts, by splitting the numbers at the end, one part name and one part amount
+         
+         Removes spaces from end of name
 
-      // Removes spaces in the beginning/end of each word, split them into arrays separated by comma.
-      let data = inputData.split(',').map(item => item.trim())
+         Parse int on amount, or set 1 if nothing is specified
+      */
+      let data = inputData.split(',').map(item => {
+        let parts = item.trim().split(/(\d+)$/)
+        let name = parts[0].trim()
+        let amount = parseInt(parts[1]) || 1
+        return { name, amount }
+      })
+
+      let jsonData = {
+        fruits: data
+      }
+
+      await postSmoothieMix(jsonData).then(data => setNutritionData(data))
     }
 
     //TODO Notify user that nothing happens cause input is empty
@@ -18,16 +38,21 @@ export const HomePage = () => {
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setInputData(e.target.value)
   }
-
-  useEffect(() => {
-    postSmoothieMix().then(data => console.log(data))
-  }, [])
   return (
     <>
       <div>
         <h1>Home Page</h1>
       </div>
       <div>
+        {nutritionData && (
+          <>
+            <p>Calories: {nutritionData.calories}</p>
+            <p>Sugar: {nutritionData.sugar}</p>
+            <p>Fat: {nutritionData.fat}</p>
+            <p>Carbs: {nutritionData.carbohydrates}</p>
+            <p>Protein: {nutritionData.protein}</p>
+          </>
+        )}
         <textarea rows={4} cols={50} onChange={handleChange} placeholder='Separate fruits by comma'/>
         <button onClick={() => handleSubmit()}></button>
       </div>
