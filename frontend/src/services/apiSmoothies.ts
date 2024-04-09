@@ -1,18 +1,8 @@
 import axios from 'axios'
 import { POST_SMOOTHIE_MIX } from '../statics/apiUrls'
 
-export const postSmoothieMix = async () => {
-  const response = await axios.post(POST_SMOOTHIE_MIX, {
-    "fruits": [
-        {
-            "name": "Banana",
-            "amount": 3
-        },
-        {
-            "name": "Blueberry",
-            "amount": 4
-        }
-    ]
-  })
+// TODO NutritionDataType
+export const postSmoothieMix = async (data: any) => {
+  const response = await axios.post(POST_SMOOTHIE_MIX, data)
   return response.data
 }
