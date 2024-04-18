@@ -1,10 +1,19 @@
 import { ChangeEvent, useState } from 'react'
 import { postSmoothieMix } from '../services/apiSmoothies'
+import { TotalNutritionDisplay } from '../components/TotalNutritionDisplay'
+
+// Move this one into -> types -> ?
+export type NutritionDataType = {
+  calories: number,
+  fat: number,
+  sugar: number,
+  carbohydrates: number,
+  protein: number
+}
 
 export const HomePage = () => {
   const [inputData, setInputData] = useState<string>()
-  // Todo NutritionDataType
-  const [nutritionData, setNutritionData] = useState<any>()
+  const [nutritionData, setNutritionData] = useState<NutritionDataType>()
 
   const handleSubmit = async () => {
     if(inputData != undefined) {
@@ -46,11 +55,7 @@ export const HomePage = () => {
       <div>
         {nutritionData && (
           <>
-            <p>Calories: {nutritionData.calories}</p>
-            <p>Sugar: {nutritionData.sugar}</p>
-            <p>Fat: {nutritionData.fat}</p>
-            <p>Carbs: {nutritionData.carbohydrates}</p>
-            <p>Protein: {nutritionData.protein}</p>
+            <TotalNutritionDisplay nutritionData={nutritionData}/>
           </>
         )}
         <textarea rows={4} cols={50} onChange={handleChange} placeholder='Separate fruits by comma'/>
