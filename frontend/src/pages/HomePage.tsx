@@ -49,10 +49,14 @@ export const HomePage = () => {
   }
   return (
     <>
-      <div>
-        <h1>Home Page</h1>
+      <div className='mt-24 max-w-2xl m-auto'>
+        <h1 className='text-3xl'>Create a smoothie mix</h1>
+        <div className='mt-6'>
+        <p>Write the contents of your smoothie and get the nutritional value. Start with the name of the fruit and the amount separated by space, then separate fruits by comma.</p> 
+        <p>Example: <b>Jackfruit 8, Mango 4, Lime 1</b>.
+        Nutritional content is per 100 grams</p></div>
       </div>
-      <div>
+      <div className='mt-12'>
         {nutritionData && (
           <>
             <TotalNutritionDisplay nutritionData={nutritionData}/>
