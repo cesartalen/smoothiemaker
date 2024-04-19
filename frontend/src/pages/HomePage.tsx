@@ -38,7 +38,18 @@ export const HomePage = () => {
         fruits: data
       }
 
-      await postSmoothieMix(jsonData).then(data => setNutritionData(data))
+      await postSmoothieMix(jsonData).then(data => {
+        /* Formatting data to only show two decimal places
+           Doing in frontend so more precise data could be shown in the fruits page */
+        const formattedData : NutritionDataType = {
+          calories: data.calories,
+          fat: parseFloat(data.fat.toFixed(2)),
+          sugar: parseFloat(data.sugar.toFixed(2)),
+          carbohydrates: parseFloat(data.carbohydrates.toFixed(2)),
+          protein: parseFloat(data.protein.toFixed(2))
+        }
+        setNutritionData(formattedData)
+      })
     }
 
     //TODO Notify user that nothing happens cause input is empty
