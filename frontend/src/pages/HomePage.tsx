@@ -53,13 +53,16 @@ export const HomePage = () => {
         <h1 className='text-3xl'>Create a smoothie mix</h1>
         <div className='mt-6'>
         <p>Write the contents of your smoothie and get the nutritional value. Start with the name of the fruit and the amount separated by space, then separate fruits by comma.</p> 
-        <p>Example: <b>Jackfruit 8, Mango 4, Lime 1</b>.
+        <p>Example: <b>Jackfruit 8, Mango 4, Lime</b>.
         Nutritional content is per 100 grams</p></div>
       </div>
-      <div className='mt-12 flex flex-col max-w-[600px] m-auto'>
+      <div className='mt-6 flex flex-col max-w-[600px] m-auto'>
         {nutritionData && (
           <>
-            <TotalNutritionDisplay nutritionData={nutritionData}/>
+            <h2 className='font-bold mb-2'>Your smoothie contains</h2>
+            <div className='border-gray-400 border-2 rounded-md p-4 mb-6'>  
+              <TotalNutritionDisplay nutritionData={nutritionData}/>
+            </div>
           </>
         )}
         <textarea rows={4} cols={50} onChange={handleChange} placeholder='Separate fruits by comma' className='border-gray-400 border-2 rounded-md focus:border-cyan-400 focus:outline-none p-4'/>
