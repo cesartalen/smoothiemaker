@@ -56,14 +56,14 @@ export const HomePage = () => {
         <p>Example: <b>Jackfruit 8, Mango 4, Lime 1</b>.
         Nutritional content is per 100 grams</p></div>
       </div>
-      <div className='mt-12'>
+      <div className='mt-12 flex flex-col max-w-[600px] m-auto'>
         {nutritionData && (
           <>
             <TotalNutritionDisplay nutritionData={nutritionData}/>
           </>
         )}
-        <textarea rows={4} cols={50} onChange={handleChange} placeholder='Separate fruits by comma'/>
-        <button onClick={() => handleSubmit()}></button>
+        <textarea rows={4} cols={50} onChange={handleChange} placeholder='Separate fruits by comma' className='border-gray-400 border-2 rounded-md focus:border-cyan-400 focus:outline-none p-4'/>
+        <button className='border-gray-400 border-2 rounded-md focus:outline-none mt-6 p-4 hover:border-gray-300' onClick={() => handleSubmit()}>Get Nutritional Data</button>
       </div>
     </>
   )
